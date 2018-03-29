@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #wrap {
+            width: 970px;
+            margin: 0 auto;
+        }
+
+        #title {
+            padding: 30px 0 30px 0;
+            font-size: 40px;
+            font-weight: bold;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .header {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 35px 0 15px 0;
+        }
+
+        .form {
+            padding: 10px 0;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .compile {
+            width: 85px;
+            height: 40px;
+            border-radius: 5px;
+        }
+
+        #newbtnline {
+            padding: 25px 0;
+            border-top: 1px solid #EEEEEE;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        #newbtn {
+            width: 135px;
+            height: 40px;
+            background-color: #58BA63;
+            color: white;
+            border-radius: 5px;
+            line-height: 40px;
+            font-size: 18px;
+        }
+
+        #newtitle {
+            padding: 25px 0 15px 0;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .informationl {
+            margin-bottom: 15px;
+            height: 40px;
+        }
+
+        .item {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 40px;
+        }
+
+        .intext {
+            width: 100%;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #CCCCCC;
+        }
+        #submit{
+            width: 95px;
+            height: 40px;
+            background-color: #58BA63;
+            color: white;
+            border-radius: 5px;
+            line-height: 40px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wrap">
+    <!--title-->
+    <div class="row" id="title">
+        <div class="col-md-12">Users</div>
+    </div>
+    <!--表头-->
+    <div class="row header">
+        <div class="col-md-8">编辑</div>
+        <div class="col-md-2">姓</div>
+        <div class="col-md-2">名</div>
+    </div>
+
+    <!--表身-->
+    <div class="row form">
+        <div class="col-md-8">
+            <button class="compile">
+                <span class="glyphicon glyphicon-pencil">编辑</span>
+            </button>
+        </div>
+        <div class="col-md-2">张</div>
+        <div class="col-md-2">三</div>
+    </div>
+
+    <!--创建新用户按钮-->
+    <div class="row" id="newbtnline">
+        <div class="col-md-12">
+            <button>
+                <span class="glyphicon glyphicon-user" id="newbtn">创建新用户</span>
+            </button>
+        </div>
+    </div>
+    <!--information-->
+    <div class="row" id="newtitle">
+        <div class="col-md-12">创建新用户</div>
+    </div>
+
+    <form action="/post" method="post">
+
+        <div class="row informationl">
+            <div class="col-md-2 item">姓</div>
+            <div class="col-md-10">
+                <input type="text" class="intext" name="firstname">
+            </div>
+        </div>
+        <div class="row informationl">
+            <div class="col-md-2 item">名</div>
+            <div class="col-md-10">
+                <input type="text" class="intext" name="lastname">
+            </div>
+        </div>
+        <div class="row informationl">
+            <div class="col-md-2 item">密码</div>
+            <div class="col-md-10">
+                <input type="text" class="intext" name="password">
+            </div>
+        </div>
+        <div class="row informationl">
+            <div class="col-md-2 item">重复密码</div>
+            <div class="col-md-10">
+                <input type="text" class="intext" name="repassword">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" id="submit">
+            </div>
+        </div>
+
+
+    </form>
+
+</div>
+
+
+</body>
+<script>
+
+
+
+
+    ajax_get("/ajax",function () {
+        
+    })
+
+    function ajax_get(url,callback) {
+        var xhr = null;
+        if(window.XMLHttpRequest){
+            xhr = new XMLHttpRequest();
+        }else {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState == 4){
+                callback(xhr.responseText);
+            }
+        };
+        xhr.open("get",url,true);
+        xhr.send();
+    }
+</script>
+</html>
