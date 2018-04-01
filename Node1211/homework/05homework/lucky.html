@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #bg {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        #row {
+            width: 320px;
+            height: 320px;
+            position: absolute;
+            top: 210px;
+            left: 52px;
+        }
+
+        #shadow {
+            width: 110px;
+            height: 110px;
+            position: absolute;
+            top: 312px;
+            left: 158px;
+        }
+
+        #btn {
+            width: 106px;
+            height: 136px;
+            position: absolute;
+            top: 290px;
+            left: 160px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <img src="img/2B.png" id="bg">
+    <img src="img/row.png" alt="" id="row">
+    <img src="img/shadow.png" alt="" id="shadow">
+    <img src="img/btn.png" alt="" id="btn">
+</div>
+</body>
+<script>
+    var oBtn = document.getElementById("btn");
+    var oRow = document.getElementById("row");
+    var deg = 0;
+    //转盘转动
+    var Timer = null;
+    //转盘停止延迟执行
+    var TimerStop = null;
+    //只能点击一次
+    var flag = true;
+    //奖项
+    var praise = null;
+    var edeg = null;
+
+    oBtn.onclick = function () {
+        if (flag) {
+            rowwing();
+            flag = false;
+        }
+
+    };
+
+    /******************转盘旋转**********************/
+    function rowwing() {
+        Timer = setInterval(function () {
+            if (deg == 360) {
+                deg = 0;
+            }
+            deg += 10;
+            oRow.style.transform = "rotate(" + deg + "deg)";
+
+            if (edeg) {
+                Stop();
+            }
+        }, 20);
+    }
+
+    /********************后台决定是几等奖************************/
+
+    ajax_get("/lucky/ajax",function (praise) {
+        console.log(praise);
+        switch (praise) {
+            case "1":
+                edeg = 60 * praise;
+                break;
+            case "2":
+                edeg = 60 * praise;
+                break;
+            case "3":
+                edeg = 60 * praise;
+                break;
+            case "4":
+                edeg = 60 * praise;
+                break;
+            case "5":
+                edeg = 60 * praise;
+                break;
+            case "6":
+                edeg = 60 * praise;
+                break;
+        }
+    });
+
+
+
+    /**********************暂停*************************/
+    function Stop() {
+        TimerStop = setTimeout(function () {
+            if (edeg == deg) {
+                clearInterval(Timer);
+
+                var index = 0;
+                var odeg = 9;
+
+                var timer2 = setInterval(function () {
+
+                    deg += odeg
+                    oRow.style.transform = "rotate(" + deg + "deg)";
+                    index++;
+                    if (index == 8) {
+                        index = 0;
+                        odeg--;
+                        if(odeg == 0){
+                            clearInterval(timer2);
+                        }
+                    }
+
+                }, 20)
+
+            }
+
+        }, 2000)
+    }
+
+
+
+
+
+
+
+
+
+    function ajax_get(url,callback) {
+        var xhr = null;
+        if(window.XMLHttpRequest){
+            xhr = new XMLHttpRequest();
+        }else {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState == 4){
+                callback(xhr.responseText);
+            }
+        };
+        xhr.open("get",url,true);
+        xhr.send();
+    }
+</script>
+</html>

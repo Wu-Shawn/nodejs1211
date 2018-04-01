@@ -178,11 +178,10 @@
 
 
     ajax_get("/ajax",function (data) {
-        console.log(data);
-        var fileData = data.split(".");
-        console.log(fileData);
+        var datafiles = JSON.parse(data)
+        console.log(datafiles[0])
 
-        for (var i = 0 ;i < fileData.length - 1 ;i++){
+        for (var i = 0 ;i < data.length;i++){
             var newdiv = document.createElement("div");
             newdiv.className = "row form";
             oBody.appendChild(newdiv);
@@ -201,12 +200,12 @@
 
             newdiv2 = document.createElement("div");
             newdiv2.className = "col-md-2";
-            newdiv2.innerHTML = JSON.parse(fileData[i])["firstname"]
+            newdiv2.innerHTML = datafiles[i]["firstname"]
             newdiv.appendChild(newdiv2);
 
             newdiv3 = document.createElement("div");
             newdiv3.className = "col-md-2";
-            newdiv3.innerHTML = JSON.parse(fileData[i])["lastname"]
+            newdiv3.innerHTML = datafiles[i]["lastname"]
             newdiv.appendChild(newdiv3);
 
 
@@ -215,7 +214,7 @@
 
 
 
-    })
+    });
 
 
 

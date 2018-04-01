@@ -11,11 +11,16 @@ app.get("/",(req,res)=>{
 //ajax
 app.get("/ajax",(req,res)=>{
     fs.readFile("./1.txt","utf-8",(err,data)=>{
-        console.log(data)
+        if (err) {
+            console.error(err);
+        } else {
+            var fileData = data;
+            console.log(fileData);
+            res.send(fileData);
+        }
     })
 
-})
-
+});
 
 //post
 app.post("/post",(req,res)=>{
@@ -25,7 +30,7 @@ app.post("/post",(req,res)=>{
             console.error(err);
         }else {
             var data = JSON.stringify(args);
-            fs.writeFile("./1.txt",data,{
+            fs.writeFile("./1.txt",data + ".",{
                 flag:"a"
             },(err)=>{
                 if (err){
